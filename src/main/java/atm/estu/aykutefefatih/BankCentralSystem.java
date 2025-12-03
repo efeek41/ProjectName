@@ -2,11 +2,12 @@ package atm.estu.aykutefefatih;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 public class BankCentralSystem {
     private static Map<String, CustomerAccount> customerAccounts; 
     private static BankCentralSystem instance;
-    private static String log = "";
+    private static Stack<String> transactionStack = new Stack<String>();
     
     private BankCentralSystem() {}
     
@@ -39,5 +40,8 @@ public class BankCentralSystem {
         if (current != null) {
             current.setBalance(newBalance);
         }
+    }
+    public static Stack<String> getLogStack(){
+        return transactionStack;
     }
 }

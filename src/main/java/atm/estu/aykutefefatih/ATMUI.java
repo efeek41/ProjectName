@@ -97,7 +97,7 @@ public class ATMUI {
         clearScreen();
         int localAmount;
         while (true) { 
-            System.out.printf("Please enter the amount you want to withdraw (Current Balance: %f): \n",ATMController.getCurrentAccount().getBalance());
+            System.out.printf("Please enter the amount you want to withdraw (Current Balance: %f): \n",ATMController.checkBalance());
             localAmount = Integer.valueOf(sc.nextLine());
 
             simulateDelay(0.5, "Processing");
@@ -106,7 +106,7 @@ public class ATMUI {
                 System.out.println("Withdraw Successful!");
                 break;
             }else{
-                System.out.printf("Please enter an amount in range of your balance  (Current Balance: %f): \n",ATMController.getCurrentAccount().getBalance());
+                System.out.printf("Please enter an amount in range of your balance  (Current Balance: %f): \n",ATMController.checkBalance());
             }
             sleep(2);
             clearScreen();
