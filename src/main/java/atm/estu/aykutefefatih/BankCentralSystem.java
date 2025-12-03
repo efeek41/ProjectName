@@ -6,8 +6,7 @@ import java.util.Stack;
 
 public class BankCentralSystem {
     private static Map<String, CustomerAccount> customerAccounts; 
-    private static BankCentralSystem instance;
-    private static Stack<String> transactionStack = new Stack<String>();
+    private static Stack<String> transactionStack = new Stack<>();
     
     private BankCentralSystem() {}
     

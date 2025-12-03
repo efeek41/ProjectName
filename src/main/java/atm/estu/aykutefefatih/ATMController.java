@@ -48,5 +48,8 @@ public class ATMController {
         String logEntry = String.format("[%s] %s - Amount: %s - Card: %s", date, transactionType, amount, cardID);
         BankCentralSystem.getLogStack().add(logEntry);
     }
+    public static void printTransaction(){
+        
+    }
 
 }
