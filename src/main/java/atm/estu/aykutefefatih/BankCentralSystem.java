@@ -1,12 +1,12 @@
 package atm.estu.aykutefefatih;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
-import java.util.Stack;
 
 public class BankCentralSystem {
     private static Map<String, CustomerAccount> customerAccounts; 
-    private static Stack<String> transactionStack = new Stack<>();
+    private static LinkedList<String> transactionLinkedList = new LinkedList<>();
     
     private BankCentralSystem() {}
     
@@ -40,7 +40,7 @@ public class BankCentralSystem {
             current.setBalance(newBalance);
         }
     }
-    public static Stack<String> getLogStack(){
-        return transactionStack;
+    public static LinkedList<String> getLogList(){
+        return transactionLinkedList;
     }
 }

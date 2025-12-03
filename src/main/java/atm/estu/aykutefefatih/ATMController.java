@@ -2,6 +2,7 @@ package atm.estu.aykutefefatih;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
 
 public class ATMController {
     private static CustomerAccount currentAccount = null;
@@ -44,12 +45,23 @@ public class ATMController {
     }
 
     public static void logTransaction(String transactionType, String amount, String date){
-        String cardID = currentAccount.getCardNumber();
-        String logEntry = String.format("[%s] %s - Amount: %s - Card: %s", date, transactionType, amount, cardID);
-        BankCentralSystem.getLogStack().add(logEntry);
-    }
-    public static void printTransaction(){
-        
-    }
+         String cardID = currentAccount.getCardNumber();
+         LinkedList<String> transactionList = BankCentralSystem.getLogList();
 
+        String logEntry = String.format("[%s] %s - Amount: %s - Card: %s", date, transactionType, amount, cardID);
+        transactionList.add(logEntry);
+    }
+    public static void printAllLogs() {
+        LinkedList<String> transactionList = BankCentralSystem.getLogList();
+        if (transactionList.isEmpty()) {
+            System.out.println("There is no log to show.");
+            return;
+        }
+
+        System.out.println("\n--- TRANSACTION HISTORY (LOGS) ---");
+        for (String log : transactionList) {
+            System.out.println(log);
+        }
+        System.out.println("------------------------------\n");
+    }
 }
