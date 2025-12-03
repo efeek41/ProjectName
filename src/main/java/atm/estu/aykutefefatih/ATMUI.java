@@ -13,19 +13,23 @@ public class ATMUI {
             BankCentralSystem.setCurrentAccount(tempCardNumber);
             System.out.println("Please enter PIN: ");
             String tempPIN = sc.nextLine();
-            if (ATMController.authCustomer(tempPIN)) {
-                
-                break;
-            }
             clearScreen();
-
             System.out.println("Authenticating.");
             sleep(2);
             clearScreen();
             System.out.println("Authenticating..");
             sleep(2);
+            clearScreen();
             System.out.println("Authenticating...");
             sleep(2);
+            clearScreen();
+            if (ATMController.authCustomer(tempPIN)) {
+                
+                break;
+            }
+
+            
+
             System.out.printf("Card Number or PIN is invalid, %d attempts are left.\n", 3-i );
             sleep(1);
         
@@ -48,6 +52,18 @@ public class ATMUI {
 
     private void showMainMenu(){
 
+        while(true){
+            System.out.println(
+            """
+                Please select the transaction:
+                1-Deposit
+                2-Withdraw
+                3-Check Balance
+            """);
+
+        }
+        
+        
     }
     
 }
