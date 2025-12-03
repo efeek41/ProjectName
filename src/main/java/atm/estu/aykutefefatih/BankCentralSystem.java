@@ -34,5 +34,10 @@ public class BankCentralSystem {
         return false;
     }
 
-    
+    public static void updateBalance(double newBalance) {
+        CustomerAccount current = ATMController.getCurrentAccount();
+        if (current != null) {
+            current.setBalance(newBalance);
+        }
+    }
 }

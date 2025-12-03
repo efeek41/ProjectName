@@ -26,13 +26,13 @@ public class ATMController {
     
     public static void deposit(double amount) {
         if (amount > 0) { //aslında gereksiz zaten atm'de eksi tuşu olmayacak ama
-            currentAccount.setBalance(amount+currentAccount.getBalance()); 
+            BankCentralSystem.updateBalance(amount+currentAccount.getBalance()); 
         }
     }
     
     public static boolean withdraw(double amount) {
         if (currentAccount.getBalance() >= amount) {
-            currentAccount.setBalance(currentAccount.getBalance() - amount);
+            BankCentralSystem.updateBalance(currentAccount.getBalance() - amount);  
             return true;
         }
         return false;
@@ -42,7 +42,7 @@ public class ATMController {
         return currentAccount.getBalance();
     }
 
-    public static void logTransaction(String transactionType, String amount, String date, String cardID){
+    public static void logTransaction(String transactionType, String amount, String date){
 
     }
 }
