@@ -2,7 +2,7 @@ package atm.estu.aykutefefatih;
 
 public class CustomerAccount {
     private final String cardNumber;
-    private String pin;
+    private final String pin;
     private double balance;
     
     public CustomerAccount(String cardNumber, String pin, double balance) {
@@ -11,23 +11,22 @@ public class CustomerAccount {
         this.balance = balance;
     }
     
-    public String getCardNumber() {
+    //kart numarasının değeri immutable olmalı o yüzden encapsulation uyguladık
+    protected String getCardNumber() {
         return cardNumber;
     }
     
-    public String getPin() {
+    //şifre değiştirmeyi desteklemiyor o yüzden immutable
+    protected String getPin() {
         return pin;
     }
     
-    public void setPin(String pin) {
-        this.pin = pin;
-    }
-    
-    public double getBalance() {
+    //değeri yanlışlıkla değişmesin diye encapsulation
+    protected double getBalance() {
         return balance;
-    }
-    
-    public void setBalance(double balance) {
+    } 
+    protected void setBalance(double balance) {
         this.balance = balance;
     }
+    //
 }

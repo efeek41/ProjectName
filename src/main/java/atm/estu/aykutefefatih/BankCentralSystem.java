@@ -5,12 +5,24 @@ import java.util.LinkedList;
 import java.util.Map;
 
 public class BankCentralSystem {
-    private static Map<String, CustomerAccount> customerAccounts; 
-    private static LinkedList<String> transactionLinkedList = new LinkedList<>();
+    private static BankCentralSystem centralSystemInstance;
+    private static ATMController controllerInstance = ATMController.getCentralSystem();
+    private Map<String, CustomerAccount> customerAccounts; 
+    private LinkedList<String> log = new LinkedList<>();
     
     private BankCentralSystem() {}
+
+    //singleton pattern
+    protected static BankCentralSystem getCentralSystem(){
+        if(centralSystemInstance == null){
+            centralSystemInstance = new BankCentralSystem();
+            centralSystemInstance.initializeTestData();
+        }
+        return centralSystemInstance;
+    }
     
-    protected static void initializeTestData() {
+    //burası simülasyon için gerçekte yok, database simülasyonu
+    protected void initializeTestData() {
         // Simüle etmek için yaptık, örnek olarak hesaplar oluşturduk
         customerAccounts = new HashMap<>();
         customerAccounts.put("12345", new CustomerAccount("12345", "1234", 5000.0));
@@ -19,28 +31,22 @@ public class BankCentralSystem {
     }
 
     protected boolean validatePIN(String inputPIN){
-        if(inputPIN.equals(customerAccounts.get(ATMController.getCurrentAccount().getCardNumber()).getPin())){
-            return true;
-        }
-        return false;
+        return inputPIN.equals(customerAccounts.get(controllerInstance.getCurrentAccount().getCardNumber()).getPin());
     }
 
-    protected static boolean setCurrentAccount(String cardNumber){
+    protected CustomerAccount findCurrentAccount(String cardNumber){
         CustomerAccount localCurrentAccount = customerAccounts.get(cardNumber);
-        if(localCurrentAccount != null){
-            ATMController.setCurrentAccount(localCurrentAccount);
-            return true;
-        }
-        return false;
+        return localCurrentAccount;
     }
 
-    public static void updateBalance(double newBalance) {
-        CustomerAccount current = ATMController.getCurrentAccount();
+    protected void updateBalance(double newBalance) {
+        CustomerAccount current = controllerInstance.getCurrentAccount();
         if (current != null) {
             current.setBalance(newBalance);
         }
     }
-    public static LinkedList<String> getLogList(){
-        return transactionLinkedList;
+    
+    public LinkedList<String> getLogList(){
+        return log;
     }
 }
