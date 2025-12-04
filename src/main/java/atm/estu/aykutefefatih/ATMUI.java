@@ -28,8 +28,9 @@ public class ATMUI {
             String tempPIN = sc.nextLine();
             simulateDelay(1,"Authenticating");
             if (controllerInstance.authCustomer(tempPIN)) {
-                count = 1;
                 showMainMenu();
+                count--;
+                continue;
             }else{
                 System.out.printf("Card Number or PIN is invalid, %d attempts are left.\n", 3-count);
             }
