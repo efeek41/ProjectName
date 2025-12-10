@@ -11,34 +11,9 @@ public class ATMUI {
     private static BankCentralSystem centralSystemInstance = BankCentralSystem.getCentralSystem();
     
     public static void main(String[] args) {
-        for (int count = 1; count <= 3; count++) {
-            clearScreen();
-            System.out.println("Please enter Card Number (For simulation, press X to show logs.): ");
-            String tempInput = sc.nextLine();
-            if(tempInput.equalsIgnoreCase("x")){
-                clearScreen();
-                controllerInstance.printAllLogs();
-                System.out.println("Press ENTER to continue");
-                sc.nextLine();
-                count--;
-                continue;
-            }
-            controllerInstance.setCurrentAccount(tempInput);
-            System.out.println("Please enter PIN: ");
-            String tempPIN = sc.nextLine();
-            simulateDelay(1,"Authenticating");
-            if (controllerInstance.authCustomer(tempPIN)) {
-                showMainMenu();
-                count--;
-                continue;
-            }else{
-                System.out.printf("Card Number or PIN is invalid, %d attempts are left.\n", 3-count);
-            }
-            
-            sleep(1); 
-        }
-        
+        logInMenu();       
     }
+    
     //cli için komutlar
     private static void clearScreen() {  
         System.out.print("\033[H\033[2J");
@@ -65,8 +40,33 @@ public class ATMUI {
             sleep(time);
             clearScreen();
     }
-    
     //buradaki her şey ui yönlendirmesi
+    private static void logInMenu() {
+        while (controllerInstance.getRemainingAttempts() > 0) {
+            clearScreen();
+            System.out.println("Please enter Card Number (For simulation, press X to show logs.): ");
+            String tempInput = sc.nextLine();
+            if(tempInput.equalsIgnoreCase("x")){
+                clearScreen();
+                controllerInstance.printAllLogs();
+                System.out.println("Press ENTER to continue");
+                sc.nextLine();
+                controllerInstance.resetRemainingAttempts();
+                continue;
+            }
+            controllerInstance.setCurrentAccount(tempInput);
+            System.out.println("Please enter PIN: ");
+            String tempPIN = sc.nextLine();
+            simulateDelay(1,"Authenticating");
+            if (controllerInstance.authCustomer(tempPIN)) {
+                showMainMenu();
+                continue;
+            }else{
+                System.out.printf("Card Number or PIN is invalid, %d attempts are left.\n", controllerInstance.getRemainingAttempts());
+            }
+            sleep(1); 
+        }
+    } 
     private static void showMainMenu(){
         int selection;
         while(controllerInstance.getCurrentAccount() != null){  
